@@ -6,7 +6,7 @@ import useInput from "../../hooks/use-input";
 const isNotEmpty = (value) => value.trim() !== "";
 const isEmail = (value) => value.includes("@");
 const re =
-  /^(?=.*)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@^%&? "])[a-zA-Z0-9!#$@^%&?]{8,20}$/;
+  /^(?=.*)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@^%&? "])[a-zA-Z0-9!#$@^%&?]{5,20}$/;
 const password = (value) => re.test(value);
 
 const RegisterForm = (props) => {
@@ -167,8 +167,7 @@ const RegisterForm = (props) => {
                               onChange={firstNameChangeHandler}
                               onBlur={firstNameBlurHandler}
                             />
-                            {/* <div className="invalid-feedback">Enter valid name</div>
-                            <div className="valid-feedback">Looks good!</div> */}
+                            <div className="invalid-feedback">Enter valid name</div>
                           </div>
 
                           <div className="col-md-6">
@@ -186,7 +185,7 @@ const RegisterForm = (props) => {
                               onChange={lastNameChangeHandler}
                               onBlur={lastNameBlurHandler}
                             />
-                            {/* <div className="valid-feedback">Looks good!</div> */}
+                            <div className="invalid-feedback">Enter valid name</div>
                           </div>
                         </div>
 
@@ -208,12 +207,7 @@ const RegisterForm = (props) => {
                                 onChange={emailChangeHandler}
                                 onBlur={emailBlurHandler}
                               />
-                              {/* <div
-                                id="validationServerUsernameFeedback"
-                                className="valid-feedback"
-                              >
-                                Please choose a username.
-                              </div> */}
+                              <div className="invalid-feedback">Enter valid email</div>
                             </div>
                           </div>
                         </div>
@@ -236,19 +230,7 @@ const RegisterForm = (props) => {
                                 onChange={passwordChangeHandler}
                                 onBlur={passwordBlurHandler}
                               />
-                              {/* <i
-                                className="bi bi-info-square mx-3"
-                                style={{
-                                  fontSize: "1.5rem",
-                                  cursor: "pointer",
-                                }}
-                              ></i> */}
-                              {/* <div
-                                id="validationServerPasswordFeedback"
-                                className="valid-feedback"
-                              >
-                                Please choose a username.
-                              </div> */}
+                              <div className="invalid-feedback">Password should contain atleast 5 characters and should contain atleast one special character, one number, one uppercase letter and one lowecase letter.</div>
                             </div>
                           </div>
                         </div>
@@ -274,19 +256,7 @@ const RegisterForm = (props) => {
                                 }}
                                 onBlur={confirmPasswordBlurHandler}
                               />
-                              {/* <i
-                                className="bi bi-info-square mx-3"
-                                style={{
-                                  fontSize: "1.5rem",
-                                  cursor: "pointer",
-                                }}
-                              ></i> */}
-                              {/* <div
-                                id="validationServerConfirmPassFeedback"
-                                className="valid-feedback"
-                              >
-                                Please choose a username.
-                              </div> */}
+                              <div className="invalid-feedback">Password did not match</div>
                             </div>
                           </div>
                         </div>
