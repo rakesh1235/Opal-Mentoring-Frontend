@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import useHttp from "../../hooks/use-http";
 import useInput from "../../hooks/use-input";
+import AlertContext from "../../store/alert-context";
 import AuthContext from "../../store/auth-context";
 
 const isNotEmpty = (value) => value.trim() !== "";
@@ -11,6 +12,8 @@ const LoginForm = () => {
   const authCtx = useContext(AuthContext);
   const { sendPostRequest: postMethod } = useHttp();
   const history = useHistory();
+
+  const alertCtx = useContext(AlertContext);
 
   const {
     value: emailValue,
@@ -52,10 +55,9 @@ const LoginForm = () => {
       if (data.error) {
         alert(data.error)
       } else {
+        alertCtx.setAlert('success', 'Logged in Successfully');
         authCtx.login(data.authtoken);
-        alert("Login Success")
-        history.push('/');
-
+        localStorage.setItem('userName', data.userName);
       }
     });
     resetEmail();
@@ -121,6 +123,7 @@ const LoginForm = () => {
                             onChange={passwordChangeHandler}
                             onBlur={passwordBlurHandler}
                           />
+                        
                           <label
                             className="form-label"
                             htmlFor="form2Example27"
