@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import useHttp from "../../hooks/use-http";
 import useInput from "../../hooks/use-input";
 import AlertContext from "../../store/alert-context";
 import AuthContext from "../../store/auth-context";
+import { Spinner } from "reactstrap";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isEmail = (value) => value.includes("@");
@@ -13,6 +14,7 @@ const LoginForm = () => {
   const { sendPostRequest: postMethod } = useHttp();
 
   const alertCtx = useContext(AlertContext);
+  const [loggingIn, setLoggingIn] = useState(false)
 
   const {
     value: emailValue,
@@ -48,14 +50,17 @@ const LoginForm = () => {
       email: emailValue,
       password: passwordValue,
     };
+    setLoggingIn(true);
 
     postMethod({ url: "/auth/login", obj: userObj }, (data) => {
       if (data.error) {
         alertCtx.setAlert("error", data.error);
+        setLoggingIn(false);
       } else {
         alertCtx.setAlert("success", "Logged in Successfully");
         authCtx.login(data.authtoken);
         localStorage.setItem("userName", data.userName);
+        setLoggingIn(false);
         resetEmail();
         resetPassword();
       }
@@ -131,8 +136,9 @@ const LoginForm = () => {
                         <div className="pt-1 mb-4">
                           <button
                             className="btn btn-dark btn-lg btn-block"
-                            type="submit"
+                            type="submit" disabled={loggingIn}
                           >
+                            {loggingIn &&<Spinner size="sm">Loading...</Spinner>}
                             Login
                           </button>
                         </div>
