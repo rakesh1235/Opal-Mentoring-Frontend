@@ -5,14 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./store/auth-context";
+import { AlertContextProvider } from "./store/alert-context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
-    <AuthContextProvider>
+  <AuthContextProvider>
     <BrowserRouter>
-      <App />
+      <AlertContextProvider>
+        <App />
+      </AlertContextProvider>
     </BrowserRouter>
-    </AuthContextProvider>
+  </AuthContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
