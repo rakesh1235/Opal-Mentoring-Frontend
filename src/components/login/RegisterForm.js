@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import useHttp from "../../hooks/use-http";
 import useInput from "../../hooks/use-input";
+import AlertContext from "../../store/alert-context";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isEmail = (value) => value.includes("@");
@@ -16,6 +17,7 @@ const RegisterForm = (props) => {
   } = useHttp();
 
   const history = useHistory();
+  const alertCtx = useContext(AlertContext);
 
   const {
     value: firstNameValue,
@@ -91,10 +93,10 @@ const RegisterForm = (props) => {
 
     postMethod({ url: "/auth/createuser", obj: userObj }, (data) => {
       if(data.error){
-        alert(data.error)
+        alertCtx.setAlert("error", data.error);
       }
       else{
-      alert("User Registered Successfully.")
+        alertCtx.setAlert("success", "User Registered Successfully.");
         history.push('/');
       }
     });
@@ -127,7 +129,7 @@ const RegisterForm = (props) => {
 
   return (
     <>
-      <section className="vh-100" style={{ backgroundColor: "#9A616D" }}>
+      <section className="vh-100" style={{ backgroundColor: "#cfd8dc" }}>
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col col-xl-6">

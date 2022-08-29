@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useHttp from "../../hooks/use-http";
 import useInput from "../../hooks/use-input";
 import AlertContext from "../../store/alert-context";
@@ -11,7 +11,6 @@ const isEmail = (value) => value.includes("@");
 const LoginForm = () => {
   const authCtx = useContext(AuthContext);
   const { sendPostRequest: postMethod } = useHttp();
-  const history = useHistory();
 
   const alertCtx = useContext(AlertContext);
 
@@ -45,7 +44,6 @@ const LoginForm = () => {
       return;
     }
 
-
     const userObj = {
       email: emailValue,
       password: passwordValue,
@@ -53,15 +51,15 @@ const LoginForm = () => {
 
     postMethod({ url: "/auth/login", obj: userObj }, (data) => {
       if (data.error) {
-        alert(data.error)
+        alertCtx.setAlert("error", data.error);
       } else {
-        alertCtx.setAlert('success', 'Logged in Successfully');
+        alertCtx.setAlert("success", "Logged in Successfully");
         authCtx.login(data.authtoken);
-        localStorage.setItem('userName', data.userName);
+        localStorage.setItem("userName", data.userName);
+        resetEmail();
+        resetPassword();
       }
     });
-    resetEmail();
-    resetPassword();
   };
 
   const emailClasses = emailHasError
@@ -73,7 +71,7 @@ const LoginForm = () => {
     : "form-control";
   return (
     <>
-      <section className="vh-100" style={{ backgroundColor: "#9A616D" }}>
+      <section className="vh-100" style={{ backgroundColor: "#cfd8dc" }}>
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col col-xl-6">
@@ -83,11 +81,9 @@ const LoginForm = () => {
                     <div className="card-body p-4 p-lg-5 text-black">
                       <form onSubmit={submitHandler}>
                         <div className="d-flex align-items-center mb-3 pb-1">
-                          <i
-                            className="fas fa-cubes fa-2x me-3"
-                            style={{ color: "#ff6219" }}
-                          ></i>
-                          <span className="h1 fw-bold mb-0">Logo</span>
+                          <span className="h1 fw-bold mb-0">
+                            Welcome To Application
+                          </span>
                         </div>
 
                         <h5
@@ -123,7 +119,7 @@ const LoginForm = () => {
                             onChange={passwordChangeHandler}
                             onBlur={passwordBlurHandler}
                           />
-                        
+
                           <label
                             className="form-label"
                             htmlFor="form2Example27"
@@ -153,12 +149,6 @@ const LoginForm = () => {
                             Register here
                           </Link>
                         </p>
-                        <a href="#!" className="small text-muted">
-                          Terms of use.
-                        </a>
-                        <a href="#!" className="small text-muted">
-                          Privacy policy
-                        </a>
                       </form>
                     </div>
                   </div>
