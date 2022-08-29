@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import useHttp from "../../hooks/use-http";
 import useInput from "../../hooks/use-input";
+import AlertContext from "../../store/alert-context";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isEmail = (value) => value.includes("@");
 const re =
-  /^(?=.*)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@^%&? "])[a-zA-Z0-9!#$@^%&?]{8,20}$/;
+  /^(?=.*)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@^%&? "])[a-zA-Z0-9!#$@^%&?]{5,20}$/;
 const password = (value) => re.test(value);
 
 const RegisterForm = (props) => {
@@ -16,6 +17,7 @@ const RegisterForm = (props) => {
   } = useHttp();
 
   const history = useHistory();
+  const alertCtx = useContext(AlertContext);
 
   const {
     value: firstNameValue,
@@ -91,10 +93,10 @@ const RegisterForm = (props) => {
 
     postMethod({ url: "/auth/createuser", obj: userObj }, (data) => {
       if(data.error){
-        alert(data.error)
+        alertCtx.setAlert("error", data.error);
       }
       else{
-      alert("User Registered Successfully.")
+        alertCtx.setAlert("success", "User Registered Successfully.");
         history.push('/');
       }
     });
@@ -127,7 +129,7 @@ const RegisterForm = (props) => {
 
   return (
     <>
-      <section className="vh-100" style={{ backgroundColor: "#9A616D" }}>
+      <section className="vh-100" style={{ backgroundColor: "#cfd8dc" }}>
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col col-xl-6">
@@ -167,8 +169,7 @@ const RegisterForm = (props) => {
                               onChange={firstNameChangeHandler}
                               onBlur={firstNameBlurHandler}
                             />
-                            {/* <div className="invalid-feedback">Enter valid name</div>
-                            <div className="valid-feedback">Looks good!</div> */}
+                            <div className="invalid-feedback">Enter valid name</div>
                           </div>
 
                           <div className="col-md-6">
@@ -186,7 +187,7 @@ const RegisterForm = (props) => {
                               onChange={lastNameChangeHandler}
                               onBlur={lastNameBlurHandler}
                             />
-                            {/* <div className="valid-feedback">Looks good!</div> */}
+                            <div className="invalid-feedback">Enter valid name</div>
                           </div>
                         </div>
 
@@ -208,12 +209,7 @@ const RegisterForm = (props) => {
                                 onChange={emailChangeHandler}
                                 onBlur={emailBlurHandler}
                               />
-                              {/* <div
-                                id="validationServerUsernameFeedback"
-                                className="valid-feedback"
-                              >
-                                Please choose a username.
-                              </div> */}
+                              <div className="invalid-feedback">Enter valid email</div>
                             </div>
                           </div>
                         </div>
@@ -236,19 +232,7 @@ const RegisterForm = (props) => {
                                 onChange={passwordChangeHandler}
                                 onBlur={passwordBlurHandler}
                               />
-                              {/* <i
-                                className="bi bi-info-square mx-3"
-                                style={{
-                                  fontSize: "1.5rem",
-                                  cursor: "pointer",
-                                }}
-                              ></i> */}
-                              {/* <div
-                                id="validationServerPasswordFeedback"
-                                className="valid-feedback"
-                              >
-                                Please choose a username.
-                              </div> */}
+                              <div className="invalid-feedback">Password should contain atleast 5 characters and should contain atleast one special character, one number, one uppercase letter and one lowecase letter.</div>
                             </div>
                           </div>
                         </div>
@@ -274,19 +258,7 @@ const RegisterForm = (props) => {
                                 }}
                                 onBlur={confirmPasswordBlurHandler}
                               />
-                              {/* <i
-                                className="bi bi-info-square mx-3"
-                                style={{
-                                  fontSize: "1.5rem",
-                                  cursor: "pointer",
-                                }}
-                              ></i> */}
-                              {/* <div
-                                id="validationServerConfirmPassFeedback"
-                                className="valid-feedback"
-                              >
-                                Please choose a username.
-                              </div> */}
+                              <div className="invalid-feedback">Password did not match</div>
                             </div>
                           </div>
                         </div>

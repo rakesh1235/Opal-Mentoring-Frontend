@@ -1,8 +1,9 @@
 import { useCallback } from "react";
+import {environment as env} from '../environment'
 
 const useHttp = () => {
 
-  const url = "http://localhost:3080";
+  const url = env.serverUrl;
 
   //changes is rquired
   // const sendGetRequest = useCallback(async (requestConfigObj, applyData) => {
