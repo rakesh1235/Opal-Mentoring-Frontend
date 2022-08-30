@@ -41,8 +41,8 @@ const Header = () => {
 
   return (
     <main>
-      <Navbar color="primary" dark expand="md" className="fix-header">
-        <div className="d-flex align-items-center" style={{ height: 50 }}>
+      <Navbar color="dark" dark expand="md" className="fix-header">
+        <div className="d-flex align-items-center" style={{ height: 30 }}>
           <div className="d-lg-block d-none me-5 pe-3">
             <Logo />
           </div>
@@ -73,14 +73,14 @@ const Header = () => {
         </div>
 
         <Collapse navbar isOpen={isOpen}>
-          <div className="position-absolute top-0 end-0 mt-2 me-3">
+          <div className="position-absolute top-0 end-0 me-3">
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-              <DropdownToggle color="primary" className="rounded-circle">
+              <DropdownToggle color="grey" className="rounded-circle">
                 <img
                   src={user1}
                   alt="profile"
                   className="rounded-circle"
-                  width="40"
+                  width="30"
                 ></img>
               </DropdownToggle>
               <DropdownMenu>
