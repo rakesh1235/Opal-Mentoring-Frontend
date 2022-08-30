@@ -138,7 +138,7 @@ const LoginForm = () => {
                             className="btn btn-dark btn-lg btn-block"
                             type="submit" disabled={loggingIn}
                           >
-                            {loggingIn &&<Spinner size="sm">Loading...</Spinner>}
+                            {loggingIn &&<Spinner size="sm"/>}
                             Login
                           </button>
                         </div>
