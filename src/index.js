@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./store/auth-context";
 import { AlertContextProvider } from "./store/alert-context";
+import './assets/scss/style.scss'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -9,34 +9,9 @@ import AlertContext from "../../store/alert-context";
 const navigation = [
   
   {
-    title: "Content-1",
-    href: "/",
+    title: "Programs",
+    href: "/programs",
     icon: "bi bi-bell",
-  },
-  {
-    title: "Content-2",
-    href: "/badges",
-    icon: "bi bi-patch-check",
-  },
-  {
-    title: "Content-3",
-    href: "/buttons",
-    icon: "bi bi-hdd-stack",
-  },
-  {
-    title: "Content-4",
-    href: "/table",
-    icon: "bi bi-layout-split",
-  },
-  {
-    title: "Content-5",
-    href: "/forms",
-    icon: "bi bi-textarea-resize",
-  },
-  {
-    title: "Content-6",
-    href: "/breadcrumbs",
-    icon: "bi bi-link",
   },
   {
     title: "Dashboard",
@@ -91,9 +66,9 @@ const Sidebar = () => {
               <Link
                 to={navi.href}
                 className={
-                  location.pathname === navi.href
-                    ? "active nav-link bg-primary text-white py-3 rounded-pill"
-                    : "nav-link text-secondary py-3 rounded-pill"
+                  location.pathname.startsWith(navi.href)
+                    ? "active nav-link py-3"
+                    : "nav-link text-secondary py-3"
                 }
               >
                 <i className={navi.icon}></i>
@@ -101,7 +76,6 @@ const Sidebar = () => {
               </Link>
             </NavItem>
           ))}
-          <hr />
           <Button
             color="danger"
             tag="a"
@@ -109,7 +83,7 @@ const Sidebar = () => {
             className="mt-3"
             onClick={logoutHandler}
           >
-            Logout
+            Log Out
           </Button>
         </Nav>
       </div>
