@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, Link } from "react-router-dom";
 import Sections from "./Sections";
 import { Card, CardBody, CardTitle, CardSubtitle, Table } from "reactstrap";
+import useHttp from "../../hooks/use-http";
+
 
 const Technologies = (props) => {
-  const technologies = props.program.technologies;
+  // const technologies = props.program.technologies;
+  const { sendGetRequest: getMethod } = useHttp();
+  const [technologies, setTechnologies] = useState([]);
   const urlPath = useRouteMatch();
   const [data, setData] = useState(<Sections technology=""></Sections>);
 
+  useEffect(() => {
+    const userObj = {
+      userID: localStorage.getItem("userID"),
+      programId: localStorage.getItem("programId")
+    };
+    getMethod({ url: "/userData/getTechnologies", obj: userObj }, (data) => {
+      setTechnologies(data.programs[0].technologies);
+    });
+  }, [getMethod]);
+
   const startLearningHandler = (technology) => {
+    localStorage.setItem('technologyId', technology.technologyId)
     setData(<Sections technology={technology}></Sections>);
   };
 
@@ -38,7 +53,7 @@ const Technologies = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {technologies.map((technology, index) => (
+                    {technologies!==undefined && technologies.map((technology, index) => (
                       <tr key={index} className="border-top">
                         <td>{index + 1}.</td>
                         <td>
@@ -99,7 +114,7 @@ const Technologies = (props) => {
             </Card>
           </div>
         </Route>
-        <Route exact path={`${urlPath.url}/:technology`}>
+        <Route path={`${urlPath.url}/:technology`}>
           {data}
         </Route>
       </Switch>

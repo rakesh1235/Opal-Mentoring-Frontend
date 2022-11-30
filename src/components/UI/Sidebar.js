@@ -6,8 +6,7 @@ import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import AlertContext from "../../store/alert-context";
 
-const navigation = [
-  
+const userNavigation = [
   {
     title: "Programs",
     href: "/programs",
@@ -25,6 +24,29 @@ const navigation = [
   },
 ];
 
+const adminNavigation = [
+  {
+    title: "Users",
+    href: "/users",
+    icon: "bi bi-bell",
+  },
+  {
+    title: "Mentors",
+    href: "/mentors",
+    icon: "bi bi-speedometer2",
+  },
+  {
+    title: "Programs",
+    href: "/managePrograms",
+    icon: "bi bi-people",
+  },
+  {
+    title: "Technologies",
+    href: "/manageTechnologies",
+    icon: "bi bi-people",
+  },
+];
+
 const Sidebar = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
@@ -34,11 +56,12 @@ const Sidebar = () => {
   const authCtx = useContext(AuthContext);
   const alertCtx = useContext(AlertContext);
   const history = useHistory();
+  const userRole = localStorage.getItem("userRole");
 
   const logoutHandler = () => {
     authCtx.logout();
     history.push("/");
-    alertCtx.setAlert('success', "Logged Out Successfully")
+    alertCtx.setAlert("success", "Logged Out Successfully");
   };
 
   return (
@@ -57,25 +80,43 @@ const Sidebar = () => {
             <i className="bi bi-x"></i>
           </Button>
         </div>
-        <div className="bg-dark text-white p-2 opacity-75">{localStorage.getItem('userName')}</div>
+        <div className="bg-dark text-white p-2 opacity-75">
+          {localStorage.getItem("userName")}
+        </div>
       </div>
       <div className="p-3 mt-2">
         <Nav vertical className="sidebarNav">
-          {navigation.map((navi, index) => (
-            <NavItem key={index} className="sidenav-bg">
-              <Link
-                to={navi.href}
-                className={
-                  location.pathname.startsWith(navi.href)
-                    ? "active nav-link py-3"
-                    : "nav-link text-secondary py-3"
-                }
-              >
-                <i className={navi.icon}></i>
-                <span className="ms-3 d-inline-block">{navi.title}</span>
-              </Link>
-            </NavItem>
-          ))}
+          {userRole === "admin"
+            ? adminNavigation.map((navi, index) => (
+                <NavItem key={index} className="sidenav-bg">
+                  <Link
+                    to={navi.href}
+                    className={
+                      location.pathname.startsWith(navi.href)
+                        ? "active nav-link py-3"
+                        : "nav-link text-secondary py-3"
+                    }
+                  >
+                    <i className={navi.icon}></i>
+                    <span className="ms-3 d-inline-block">{navi.title}</span>
+                  </Link>
+                </NavItem>
+              ))
+            : userNavigation.map((navi, index) => (
+                <NavItem key={index} className="sidenav-bg">
+                  <Link
+                    to={navi.href}
+                    className={
+                      location.pathname.startsWith(navi.href)
+                        ? "active nav-link py-3"
+                        : "nav-link text-secondary py-3"
+                    }
+                  >
+                    <i className={navi.icon}></i>
+                    <span className="ms-3 d-inline-block">{navi.title}</span>
+                  </Link>
+                </NavItem>
+              ))}
           <Button
             color="danger"
             tag="a"

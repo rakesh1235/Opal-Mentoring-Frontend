@@ -22,6 +22,8 @@ import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Technologies from "../home/Technologies";
+import UsersList from "../admin/user/UsersList";
+import CreateUser from "../admin/user/CreateUser";
 
 const Header = () => {
   const authCtx = useContext(AuthContext);
@@ -113,6 +115,9 @@ const Header = () => {
             <Switch>
               <Route path="/programs">
                 <Programs></Programs>
+              </Route>
+              <Route path="/users">
+                <UsersList/>
               </Route>
               <Route exact path="/about">
                 <About></About>

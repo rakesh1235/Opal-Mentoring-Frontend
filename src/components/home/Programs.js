@@ -24,6 +24,7 @@ const Programs = () => {
 
   const startLearningHandler = (program) => {
     setData(<Technologies program={program}></Technologies>);
+    localStorage.setItem('programId', program.programId)
     history.push(`/programs/${program.programName}`);
   };
 
@@ -34,7 +35,7 @@ const Programs = () => {
     duration: theme.transitions.duration.standard,
   })};
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   `}
   `;
