@@ -9,15 +9,21 @@ import {
   Container,
   NavbarBrand,
   Button,
-  Collapse
+  Collapse,
 } from "reactstrap";
 import Logo from "./Logo";
 import user1 from "../../assets/images/users/user4.jpg";
 import { ReactComponent as LogoWhite } from "../../assets/images/logos/materialprowhite.svg";
 import Sidebar from "./Sidebar";
-import Technologies from "./Leanring";
+import Programs from "../home/Programs";
 import About from "./About";
 import AuthContext from "../../store/auth-context";
+import Typography from "@mui/material/Typography";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import Technologies from "../home/Technologies";
+import UsersList from "../admin/user/UsersList";
+import CreateUser from "../admin/user/CreateUser";
 
 const Header = () => {
   const authCtx = useContext(AuthContext);
@@ -42,7 +48,7 @@ const Header = () => {
   return (
     <main>
       <Navbar color="dark" dark expand="md" className="fix-header">
-        <div className="d-flex align-items-center" style={{ height: 30 }}>
+        <div className="d-flex align-items-center">
           <div className="d-lg-block d-none me-5 pe-3">
             <Logo />
           </div>
@@ -72,8 +78,8 @@ const Header = () => {
           </Button>
         </div>
 
-        <Collapse navbar isOpen={isOpen}>
-          <div className="position-absolute top-0 end-0 me-3">
+        <Collapse navbar isOpen={isOpen} style={{height:'30px'}}>
+          <div className="position-absolute top-0 end-0 me-3" >
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
               <DropdownToggle color="grey" className="rounded-circle">
                 <img
@@ -94,18 +100,24 @@ const Header = () => {
         </Collapse>
       </Navbar>
       <div className="pageWrapper d-lg-flex">
-        <aside
-          className="sidebarArea shadow"
-          id="sidebarArea"
-          style={{ width: "16%" }}
-        >
+        <aside className="sidebarArea shadow" id="sidebarArea">
           <Sidebar />
         </aside>
-        <div className="contentArea" style={{ width: "84%" }}>
+        <div className="contentArea">
+          {/* <Breadcrumbs aria-label="breadcrumb">
+            <Link underline="hover" color="inherit" href="/">
+              Programs
+            </Link>
+            <Typography color="text.primary">Breadcrumbs</Typography>
+          </Breadcrumbs> */}
+          <hr />
           <Container className="p-4" fluid>
             <Switch>
-              <Route exact path="/">
-                <Technologies></Technologies>
+              <Route path="/programs">
+                <Programs></Programs>
+              </Route>
+              <Route path="/users">
+                <UsersList/>
               </Route>
               <Route exact path="/about">
                 <About></About>

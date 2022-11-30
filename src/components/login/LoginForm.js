@@ -60,6 +60,8 @@ const LoginForm = () => {
         alertCtx.setAlert("success", "Logged in Successfully");
         authCtx.login(data.authtoken);
         localStorage.setItem("userName", data.userName);
+        localStorage.setItem("userID", data.userId);
+        localStorage.setItem('userRole', data.role);
         setLoggingIn(false);
         resetEmail();
         resetPassword();
